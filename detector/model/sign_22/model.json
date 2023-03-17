@@ -1,0 +1,6 @@
+{
+    "model": "sign_22",
+    "threshold": 0.8,
+    "label_list": [ "background","castle","friendship","guard","purchase","trade"],
+    "class_num": 10
+}
