@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e791d56e-8f47-4c09-bf84-1650823365ea" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/src_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/src_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/191.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/3375.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/8045.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/8048.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/cruise/9321.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/191.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/3375.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/8045.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/8048.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detector/image/sign/9321.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,14 +50,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/ProgramData/Anaconda3/envs/shuyu",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ProgramData/Anaconda3/envs/shuyu&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\car2022\src_test\detector" />
