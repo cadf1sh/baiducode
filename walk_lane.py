@@ -16,6 +16,7 @@ cruiser = Cruiser()
 start_button = Button_angel(1, "2")
 # 程序关闭开关
 stop_button = Button_angel(1, "4")
+
 Sound = Buzzer()
 
 
@@ -37,23 +38,24 @@ if __name__ == '__main__':
     print("Ready to go")
 
     Sound.rings()
+    time.sleep(0.1)
+    Sound.rings()
 
     while True:
-        while True:
-            time.sleep(3)
-            if start_button.clicked():
-                Sound.rings()
-                time.sleep(0.3)
-                break
-            print("Wait for start!")
-        while True:
-            front_image = front_camera.read()
-            angle = cruiser.infer_cnn(front_image)
-            driver.steer(angle)
-#           print(driver.speed)
-            if check_stop():
-                driver.stop()
-                Sound.rings()
-                print("End of program!")
-                break
+        # time.sleep(3)
+        if start_button.clicked():
+            Sound.rings()
+            time.sleep(0.1)
+            break
+    print("Waiting for start!")
+    while True:
+        front_image = front_camera.read()
+        angle = cruiser.infer_cnn(front_image)
+        driver.steer(angle)
+#       print(driver.speed)
+        if check_stop():
+            driver.stop()
+            Sound.rings()
+            print("done!")
+            break
     front_camera.stop()
