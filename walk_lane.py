@@ -9,13 +9,14 @@ from detector.detectors import Cruiser
 
 
 front_camera = Camera(config.FRONT_CAM, [640, 480])
-
+print("Waiting for camera to start...")
 driver = Driver()
 cruiser = Cruiser()
 # 程序开启运行开关
 start_button = Button_angel(1, "2")
 # 程序关闭开关
 stop_button = Button_angel(1, "4")
+Sound = Buzzer()
 
 
 # 确认"DOWN"按键是否按下，程序是否处于等待直行状态
@@ -35,13 +36,13 @@ if __name__ == '__main__':
     time.sleep(0.5)
     print("Ready to go")
 
-#        print("Waiting for camera to start...")
+    Sound.rings()
+
     while True:
         while True:
-#           Sound.rings()
             time.sleep(3)
             if start_button.clicked():
-#               Sound.rings()
+                Sound.rings()
                 time.sleep(0.3)
                 break
             print("Wait for start!")
@@ -51,8 +52,8 @@ if __name__ == '__main__':
             driver.steer(angle)
 #           print(driver.speed)
             if check_stop():
-#               Sound.rings()
                 driver.stop()
+                Sound.rings()
                 print("End of program!")
                 break
     front_camera.stop()
