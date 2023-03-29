@@ -8,13 +8,12 @@ import sys
 sys.path.append("../")
 from config import CONTROLLER
 
-# 77 68 0c 00 02 7a 01 01 32 02 33 03 32 04 33 0A
+
 comma_head_01_motor = bytes.fromhex('77 68 06 00 02 0C 01 01')
 comma_head_02_motor = bytes.fromhex('77 68 06 00 02 0C 01 02')
 comma_head_03_motor = bytes.fromhex('77 68 06 00 02 0C 01 03')
 comma_head_04_motor = bytes.fromhex('77 68 06 00 02 0C 01 04')
 comma_head_all_motor = bytes.fromhex('77 68 0c 00 02 7a 01')
-#                                                        01:一号板
 comma_trail = bytes.fromhex('0A')
 
 
@@ -52,10 +51,9 @@ class Chassis:
         self.p = 0.8
         self.slow_ratio = 0.97
         self.min_speed = 20
-    #  设置speed，只会影响到拐弯的时候的速度，正常驱动时，采用run函数重新给速度
 
     def steer(self, angle):
-        print(angle)
+        # print(angle)
         speed = int(self.speed)
         delta = angle * self.kx
         left_wheel = speed
@@ -63,9 +61,8 @@ class Chassis:
     
         if delta < 0:
             left_wheel = int((1 + delta) * speed)
-        else:
+        elif delta > 0:
             right_wheel = int((1 - delta) * speed)
-        print(delta)
         print("left_speed:", left_wheel, "  right_speed:", right_wheel)
         self.move([left_wheel, right_wheel, left_wheel, right_wheel])
 

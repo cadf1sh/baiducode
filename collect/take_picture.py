@@ -30,7 +30,6 @@ if __name__ == "__main__":
     print('''Press the "4 button" to take photos!''')
     while True:
         if stop_button.clicked():
-            # 如果第四个按键被按下，则拍一张照片并存下
             print("btn", btn)
             path = "{}/{}.png".format(result_dir, btn)
             btn += 1

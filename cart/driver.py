@@ -31,7 +31,6 @@ class Driver:
 
     def set_speed(self, speed):
         self.speed = speed
-        self.chassis.speed = speed
 
     def set_proportion(self, proportion):
         self.proportion = proportion

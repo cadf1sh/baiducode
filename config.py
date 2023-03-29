@@ -3,8 +3,7 @@
 
 FRONT_CAM = 0   # 前摄像头编号
 SIDE_CAM = 1    # 边摄像头编号
-#                                              sign:是地面图像的标号,对六个任务他的地面图像进行了标号
-#                                              index:是侧面图像的标号,对侧面所有图像进行了标注
+#                                              sign:大概是地面的标号？不清楚      index:?啥含义啊
 task = {
         1:{"label":"采购货物", "angle":-50, "location":True, "sign":4, "index":[9]},
         2:{"label":"文化交流", "angle":125, "location":False, "sign":1, "index":[1, 4, 8]},

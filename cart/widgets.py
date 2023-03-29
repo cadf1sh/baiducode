@@ -78,7 +78,6 @@ class Button_angel:
                 return True
         return False
 
-# Data = limitSwitch()
 
 class LimitSwitch:
     def __init__(self, port):
@@ -217,7 +216,6 @@ class Buzzer:
         self.cmd_data = bytes.fromhex('77 68 06 00 02 3D 03 02 0A')
 
     def rings(self):
-        # 只会响一下，不会常响
         serial.write(self.cmd_data)
 
 

@@ -30,10 +30,12 @@ class Logger:
         self.error = 0
 
     def start(self):
+        # 开车
         self.started = True
         cart.steer(self.error)
 
     def pause(self):
+        # 暂停
         self.started = False
         cart.stop()
 
@@ -56,7 +58,6 @@ class Logger:
         self.counter += 1
         time.sleep(0.2)
 
-
     def stopped(self):
         return self.stopped_
 
@@ -65,35 +66,45 @@ js = JoyStick()
 logger = Logger()
 b = Buzzer()
 
+
 def test():
     while not logger.stopped():
         if logger.started:
             logger.log()
     cart.stop()
-    
-    
+
+
 def joystick_thread():
     while not logger.stopped():
         _time, value, type_, number = js.read()
         if js.type(type_) == "button":
             print("button:{} state: {}".format(number, value))
+            # 左1
             if number == 6:
                 if value == 1:
+                    #
                     logger.start()
                 else:
                     logger.pause()
             elif number == 7 and value == 1:
+                # 右1 ：停止采集数据
                 logger.stop()
         if logger.started:
+            # 右摇杆
             if js.type(type_) == "axis" and number == 2:
                 print("axis:{} state: {}".format(number, value))
                 # handle_axis(_time, value)
                 logger.error = value * 1.0 / 32767
                 cart.steer(logger.error)
+            if js.type(type_) == 1 and number == 14:
+            print("axis:{} state: {}".format(number, value))
+                logger.log()
+
+
         else:
             cart.stop()
     cart.stop()
-    
+
 
 def main():
     js.open()
@@ -112,17 +123,22 @@ def main():
         test()
         t.join()
         cart.stop()
-        
+
         while True:
             _time, value, type_, number = js.read()
             if number == 11 and value == 1:
+                # start按键，type  = 1
+                # 重新开始运行程序，覆盖之前的数据
                 break
+            # select 按键   type  = 1
             elif number == 10 and value == 1:
+                # 结束程序运行
                 return 0
+
+
 if __name__ == "__main__":
     # main()
     main()
     for i in range(3):
         b.rings()
         time.sleep(0.2)
-

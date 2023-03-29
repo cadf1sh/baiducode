@@ -41,6 +41,5 @@ if __name__ == "__main__":
     camera.start()
     while True:
         img = camera.read()
-        # print('{}'.format(img))
         cv2.imshow("img", img)
         cv2.waitKey(1)

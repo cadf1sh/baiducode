@@ -10,6 +10,8 @@ from camera import Camera
 from detector.detectors import *
 from task_func import *
 
+、
+
 
 front_camera = Camera(FRONT_CAM, [640, 480])
 side_camera = Camera(SIDE_CAM, [640, 480])
@@ -50,10 +52,9 @@ def check_stop():
         return True
     return False
 
-# "cruise"
+
 # 任务程序开始按钮检测函数
 def idle_handler(params=None):
-    # params =  "cruise"
     driver.stop()
     global order_num
     order_num = 1
@@ -121,16 +122,11 @@ def cruise_handler(params=None):
         if len(res) != 0:
             print(res)
             # order_num:当前执行到的任务序列
-            # 全局变量,初始值为1
             for sign in res:
-                # 检测,某一个任务(第一次为第一个任务)中,地面图标sign它的标号是否对应
                 if sign.index == task[order_num]['sign']:
-                    # 检测到了以后
 
                     # 获取标志识别结果，获得所在列表的索引值
                     sign_list[sign.index] += 1
-                    # 记录一下,地面标签检测到的次数
-
                     # 连续检测到一定次数，认为检测到，进入到任务定位程序
                     if sign_list[sign.index] > REC_NUM:
                         print('*****', res, '*****')
@@ -138,7 +134,6 @@ def cruise_handler(params=None):
                         return STATE_LOCATE_TASK, order_num
 
         else:
-            # 如果当前没有检测到,则全部清空之前的统计次数
             sign_list = [0] * 6
 
 # 标志位置测试
@@ -162,33 +157,20 @@ def task_detecte_test():
             
 # 当从巡航模式转换到做任务模式时，首先进行准确的位置定位，本函数即实现以上功能。后面进行做任务。
 def locate_task_handler(params= None):
-    global order_num   # 第一次运行到这里时,为1
+    global order_num
     global cam_dir
-    # params: 第一次运行到这里时,为1
     print("params is",params)
-
-    # 为下次做任务检测做准备,+1,但第一个任务还没有做
     order_num += 1
-    # 为了做任务更丝滑,给了个低速
-
     driver.set_speed(SLOW_SPEED)
-    # 计时
     start_time = time.time()
-    # 读取前置摄像头的图像
+    
     front_image = front_camera.read()
-    # 由前置摄像头,获取赛道Error
     angle = cruiser.infer_cnn(front_image)
-
     # driver.steer(angle)
-    # 获取侧面摄像头的图像
+
     side_image = side_camera.read()
-
-    # 检测侧面任务情况
     res_side = task_detector.detect(side_image)
-
-    # ΔX,ΔY默认给500
     _x, _y = 500, 500
-
     # 检测到位置有停下
     while True:
         if check_stop():
@@ -198,34 +180,24 @@ def locate_task_handler(params= None):
         if len(res_side) > 0:
             for res in res_side:
                 if res.index in task[params]['index']:
-                    # 正确识别到了第params个任务的侧面的图像
-                    # res.index:侧面任务图像的标号
+                    # 标签到一定位置退出循环
 
-
+                    task_functions[res.index]['position']
                     # res: 识别到的内容，最起码包括识别的类型和识别到的点的坐标
-
-                    # task_functions[res.index]['position']
-
                     # _x,_y:小车在运行过程中实时识别的中心点坐标和，已知的准确位置下该类型的中心点坐标之间的差
                     _x, _y = res.error_from_point(task_functions[res.index]['position'])
-                    # ΔX: 与侧面任务图像前后的距离
-                    # ΔY:与侧面任务图像上下的距离
+
                     print(cam_dir)
-                    # 确认前进方向
+                    # 确认方向
                     _x = _x * cam_dir
                     print(_x)
-
+                    # 做一些设置吧
                     if _x > -20:
-                    # 此时认为已经正确识别到了任务
-
                         if task[params]['location'] == False:
-                            # 确认一下当前任务是否需要定位,若不需要,则直接执行任务,否则下面即将开始定位程序
                             return STATE_DO_TASK, res.index
                         break
                     elif _x > -100:
-                        # ΔX 过大,与目标图像距离较远
                         driver.set_speed(10)
-
             if _x > -20:
                 if task[params]['location'] == False:
                     return STATE_DO_TASK, res.index
@@ -236,22 +208,14 @@ def locate_task_handler(params= None):
         if current_time - start_time > LOCATE_TIME:
             return STATE_CRUISE, None
 
-
-        # ########################若当前任务需要定位,则下面进行定位服务 #######################
-
-        # 获取前置摄像头图像
-
+        # 开始准备做任务
         front_image = front_camera.read()
-        # 获取需要旋转的角度
-
         angle = cruiser.infer_cnn(front_image)
         # 1.调整位置
         driver.steer(angle)
         # res_front = sign_detector.detect(front_image)
-
-        # 2.再获取一帧侧面的图像
+        # 2.再获取一帧准确的图像
         side_image = side_camera.read()
-
         res_side = task_detector.detect(side_image)
 
     
@@ -265,7 +229,7 @@ def locate_task_handler(params= None):
                     _x, _y = res.error_from_point(task_functions[res.index]['position'])
                     _x = _x * cam_dir
                     print(_x)
-                    # 控制前后行走
+                    # 控制左右行走
                     if _x < -20:
                         pass
                         driver.run(10, 10)
@@ -289,8 +253,6 @@ def locate_task_handler(params= None):
 
 # 做任务
 def do_task_handler(params=None):
-    # 第一次进来时,params: 1
-    #             order: 2
     print("*******", "now do task:", str(params), TASK_LABEL[params], "*******")
     global task_9_flag
 
@@ -376,10 +338,10 @@ def do_task_handler(params=None):
 
 
 state_map = {
-    STATE_IDLE: idle_handler,                # 等待,直到程序开始运行,第一个按键被按下,初始状态,上电状态
-    STATE_CRUISE: cruise_handler,            # 巡航模式,当前置摄像头检测到两次及以上地面图标Sign时,进入到准备做任务阶段
-    STATE_LOCATE_TASK: locate_task_handler,  # 从检测地面图像转化到检测侧面任务图像,定位,准备做任务,若超时,则退回巡航模式
-    STATE_DO_TASK: do_task_handler,          #
+    STATE_IDLE: idle_handler,
+    STATE_CRUISE: cruise_handler,
+    STATE_LOCATE_TASK: locate_task_handler,
+    STATE_DO_TASK: do_task_handler,
 }
 
 if __name__ == '__main__':
@@ -393,7 +355,6 @@ if __name__ == '__main__':
     # servo1.servo_control(120, 50)
     # sign_detecte_test()
     # task_detecte_test()
-
     time.sleep(2)
     current_state = STATE_IDLE
     arg = "cruise"
@@ -405,12 +366,10 @@ if __name__ == '__main__':
     
     while True:
         pass
-    # try:
+    try:
         while True:
             current_state, arg = state_map[current_state](arg)
-                                 # idle_handler(arg)
-            # STATE_CRUISE, None
-    # except ZeroDivisionError as e:
+    except ZeroDivisionError as e:
         print('except:', e)
         driver.stop()
         front_camera.stop()
